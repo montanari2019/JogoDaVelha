@@ -8,11 +8,13 @@ import {
 } from 'react-native'
 
 export default function (props) {
+    const {title, ...demaisProps} = props
+
     return (
         <View style={styles.buttonArea}>
-            <TouchableOpacity style={styles.buttonGame}>
+            <TouchableOpacity {...demaisProps} style={styles.buttonGame}>
                 <Text style={styles.titleButonGame}>
-                    {props.title}
+                    {title != null && title}
                 </Text>
             </TouchableOpacity>
         </View>
@@ -20,21 +22,20 @@ export default function (props) {
 }
 const styles = StyleSheet.create({
     buttonGame: {
-    
         backgroundColor: '#f2f2f2',
         height: Dimensions.get('window').width / 3.5,
         width: Dimensions.get('window').width / 3.5,
         borderRadius: 5,
         justifyContent: 'center',
-        
+
     },
     titleButonGame: {
         fontSize: 40,
         color: '#252525',
         textAlign: 'center',
-        
+
     },
-    buttonArea:{
+    buttonArea: {
         paddingBottom: 20,
     }
 })

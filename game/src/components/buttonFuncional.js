@@ -9,20 +9,22 @@ import {
 
 export default function (props) {
 
+    const { bola, x, value, key, ...demaisProps } = props
+
     const estiloBtn = [styles.titleButonFunction]
 
-    if(props.bola){
+    if (bola) {
         estiloBtn.push(styles.btnBola)
     }
-    else if(props.x){
+    else if (x) {
         estiloBtn.push(styles.btnX)
     }
 
     return (
         <View>
-            <TouchableOpacity style={estiloBtn}>
+            <TouchableOpacity {...demaisProps} style={estiloBtn}>
                 <Text style={styles.titleButonFunction}>
-                    {props.value}
+                    {value}
                 </Text>
             </TouchableOpacity>
         </View>
@@ -36,15 +38,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 10,
 
-        
+
     },
-    titleButonFunction:{
+    titleButonFunction: {
         fontSize: 20,
         color: '#252525',
         textAlign: 'center',
-        
+
     },
-    buttonAreaFunction:{
+    buttonAreaFunction: {
         paddingBottom: 30,
     },
     btnX: {
