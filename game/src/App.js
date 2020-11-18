@@ -19,14 +19,50 @@ const TURNO_O = "O"
 const TURNO_X = "X"
 
 export default function App() {
+
   const [valores, setValores] = useState(GAME_RESET)
   const [atualTurno, setAtualTurno] = useState(TURNO_RESET)
 
-  useEffect(() => {
-    console.log(valores)
-  }, [valores])
+  const reset = () => {
+    setValores(GAME_RESET)
+    setAtualTurno(TURNO_RESET)
+  }
 
-  const reset = () => setValores(GAME_RESET)
+  const validarTrinca = (valores) => {
+    if(valores.some(q => q == null)){
+      return null;
+    }
+
+    let result = [...new Set(valores)].length == 1;
+
+    if(result){
+      return valores[0]
+    }
+
+    return null
+  }
+
+  const validarJogo = () => {
+    const linha1 = validarTrinca(valores[0])
+    const linha2 = validarTrinca(valores[1])
+    const linha3 = validarTrinca(valores[2])
+
+    const coluna1 = validarTrinca([valores[0][0],valores[1][0],valores[2][0]])
+    const coluna2 = validarTrinca([valores[0][1],valores[1][1],valores[2][1]])
+    const coluna3 = validarTrinca([valores[0][2],valores[1][2],valores[2][2]])
+
+    const diagonal1 = validarTrinca([valores[0][0],valores[1][1],valores[2][2]])
+    const diagonal2 = validarTrinca([valores[2][2],valores[1][1],valores[0][0]])
+
+    const validacoes = [linha1, linha2, linha3, coluna1, coluna2, coluna3, diagonal1, diagonal2]
+
+    const combinacaoVencedor = validacoes.find(q => q != null)
+
+    if(combinacaoVencedor){
+      reset()
+      alert(`${combinacaoVencedor} venceu o jogo!`)
+    }
+  }
 
   const selectButtonValue = (positions) => {
     if (valores[positions[0]][positions[1]] != TURNO_RESET) {
@@ -44,7 +80,8 @@ export default function App() {
 
     setValores(newValues)
     setAtualTurno(atualTurno == TURNO_O ? TURNO_X : TURNO_O)
-    console.log(newValues)
+    
+    validarJogo()
   }
 
   return (
